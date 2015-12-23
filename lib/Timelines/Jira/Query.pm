@@ -27,7 +27,7 @@ has client => (
     required => 1,
 );
 
-has jira_query => ( is => 'ro', required => 1, lazy => 1 );
+has jira_query => ( is => 'ro', required => 1 );
 
 has start_date => ( is => 'ro', required => 1 );
 
@@ -64,6 +64,14 @@ has GC_query_overview => (
             push @{$query_overview}, $_
                 foreach ( @{ $_->{issue_obj}->GC_json_ref } );
         }
+        my @header_row = (
+            [   'Row Label',
+                'Bar Label',
+                { type => 'date', label => 'Start' },
+                { type => 'date', label => 'End' }
+            ]
+        );
+        unshift @{$query_overview}, @header_row;
         return $query_overview;
     }
 );
@@ -73,6 +81,11 @@ sub BUILD {
     $self->write_issue_level_files;
     $self->ov_menu_css;
     $self->ov_index_html;
+
+    ### Print Combined Chart and HTML
+    $self->write_query_chart_js;
+
+    ### Print story-only js.
 }
 
 sub create_issues {
@@ -114,6 +127,36 @@ sub create_issue_list {
     return \@issue_list;
 }
 
+sub write_query_chart_js {
+    my $self = shift;
+    open my $query_gc_fh, '>', './combined_chart.js';
+    my $story_gc_js = to_json( $self->GC_query_overview,
+        { pretty => 1, allow_blessed => 1 } );
+    my $combined_chart_GC_div = 'combined_chart_div';
+    (   my $combined_chart_script = qq{
+        google.load(\'visualization\', \'1\', {packages\: [\'timeline\']});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable($story_gc_js);
+            var options = {
+                avoidOverlappingGridLines: false,
+                allowHtml: true,
+                forceIFrame: true,
+            };
+            var view = new google.visualization.DataView(data);
+            //view.setColumns([]);
+            var Container = document.getElementById("$combined_chart_GC_div");
+            var chart = new google.visualization.Timeline(Container);
+
+
+            chart.draw(view, options);
+        }}
+    ) =~ s/^ {8}//mg;
+    print $query_gc_fh $combined_chart_script;
+
+}
+
 sub write_issue_level_files {
     my $self = shift;
     foreach ( @{ $self->issues } ) {
@@ -123,6 +166,7 @@ sub write_issue_level_files {
         ### Print Google Timeline.
         $_->{issue_obj}->write_story_GC_ov_html;
         $_->{issue_obj}->write_story_GC_ov_js;
+        $_->{issue_obj}->write_story_only_GC_js;
         ### Print colors.js.
         $_->{issue_obj}->write_colors_js;
     }
@@ -179,6 +223,9 @@ sub ov_index_html {
         </div>
         |
         ) =~ s/ {4,8}//mg;
+
+        # my $assignee_counter = $_->{issue_obj}->{assignee_counter} // 0;
+        # my $status_counter = $_->{issue_obj}->{status_counter} // 0;
         $index_html
             .= '<div class="menu_sprint><ul><li class="menu_simple"><a href="'
             . "./$_->{issue_key}.html" . '">'
@@ -192,6 +239,11 @@ sub ov_index_html {
             . '</ul></div>' . "\n";
     }
     $index_html .= $html_tag_close;
+    my $fh;
+    open $fh, '>', './index.html'
+        or croak "Cannot open filehandle, $fh: $!";
+    print $fh $index_html
+        or croak "Cannot print to filehandle, $fh: $!";
 }
 
 sub ov_menu_css {

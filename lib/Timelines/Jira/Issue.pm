@@ -104,17 +104,10 @@ has link_text => (
 );
 
 has histories => (
-    is   => 'ro',
-    lazy => 1,
-    default =>
-        sub { return $_[0]->issue_response->{changelog}->{histories} }
+    is      => 'ro',
+    lazy    => 1,
+    default => sub { return $_[0]->issue_response->{changelog}->{histories} }
 );
-
-has assignee_counter => ( is => 'rw' );
-
-has status_counter => ( is => 'rw' );
-
-# $self->subtask_count( scalar @{ $self->subtasks->subtask_list } );
 
 has subtask_count => (
     is      => 'ro',
@@ -143,17 +136,6 @@ sub BUILD {
             end_datetime   => $self->end_datetime
         );
         $self->subtasks($subtasks);
-        # $self->subtask_count( scalar @{ $self->subtasks->subtask_list } );
-        ### Keep track of status and assignee changes for overview.
-        my $status_counter;
-        my $assignee_counter;
-        foreach ( @{ $self->subtasks->subtask_responses } ) {
-            $status_counter   += $_->status_counter;
-            $assignee_counter += $_->assignee_counter;
-
-        }
-        $self->status_counter($status_counter);
-        $self->assignee_counter($assignee_counter);
     }
 }
 
@@ -238,17 +220,6 @@ sub create_GC_json_ref {
             foreach ( 0 .. $#{ $bucket_instance->{items} } ) {
                 my $instance_item = $bucket_instance->{items}->[$_];
                 if ( $instance_item->{field} eq $current_bucket ) {
-                    ### Count the assignee and store in attribute.
-                    my $assignee_counter = $self->assignee_counter;
-                    $assignee_counter++
-                        if $instance_item->{field} eq 'assignee';
-                    $self->assignee_counter($assignee_counter)
-                        if $instance_item->{field} eq 'assignee';
-                    ### Count the status. Store in attribute.
-                    my $status_counter = $self->status_counter;
-                    $status_counter++ if $instance_item->{field} eq 'status';
-                    $self->status_counter($status_counter)
-                        if $instance_item->{field} eq 'status';
                     my $to_string
                         = $instance_item->{toString} // 'unassigned';
                     my $from_string
@@ -573,6 +544,36 @@ sub write_story_GC_ov_js {
     ) =~ s/^ {8}//mg;
     print $story_gc_fh $story_script;
 
+}
+
+sub write_story_only_GC_js {
+    my $self = shift;
+    open my $story_gc_fh, '>', "./$self->{issue_key}" . '-gc.js'
+        or croak("$!");
+    my $story_gc_js = to_json( $self->story_only_GC,
+        { allow_blessed => 1, pretty => 1 } );
+    my $story_only_div = $self->{story_div};
+    (   my $story_script = qq{
+        google.load(\'visualization\', \'1\', {packages\: [\'timeline\']});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable($story_gc_js);
+            var options = {
+                avoidOverlappingGridLines: false,
+                allowHtml: true,
+                forceIFrame: true,
+            };
+            var view = new google.visualization.DataView(data);
+            //view.setColumns([]);
+            var Container = document.getElementById("$story_only_div");
+            var chart = new google.visualization.Timeline(Container);
+
+
+            chart.draw(view, options);
+        }}
+    ) =~ s/^ {8}//mg;
+    print $story_gc_fh $story_script;
 }
 
 ### Build google timeline data for both story with subtasks and story

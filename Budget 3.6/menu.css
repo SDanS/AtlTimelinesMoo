@@ -1,0 +1,69 @@
+
+/* CSSTerm.com Simple CSS menu */
+
+.menu_simple ul {
+margin: 0; 
+padding: 10px 7px 5px;
+width:185px;
+left: 10px;
+list-style-type: none;
+position: fixed;
+max-height: 500px;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+.menu_simple ul li a {
+text-decoration: none;
+color: black; 
+padding: 10.5px 11px;
+background-color: #005555;
+background-color: #FFFFFF;
+display:block;
+border-color: #5FD367;
+}
+ 
+.menu_simple ul li a:visited {
+color: purple;
+}
+ 
+.menu_simple ul li a:hover, .menu_simple ul li .current {
+color: purple;
+background-color: #5FD367;
+}
+
+.body_offset {
+margin-left: 225px;
+margin-top: 0px;
+}
+ 
+.menu_sprint ul {
+margin: 0;
+padding: 10px 7px 5px;
+width:1000px;
+left: 10px;
+list-style-type: none;
+position: relative;
+max-height: 800px;
+overflow-x: hidden;
+overflow-y: auto;
+}
+
+.menu_sprint ul li a {
+text-decoration: none;
+color: black;
+padding: 10.5px 11px;
+background-color: #005555;
+background-color: #FFFFFF;
+display:block;
+border-color: #5FD367;
+}
+
+.menu_sprint ul li a:visited {
+color: purple;
+}
+
+.menu_sprint ul li a:hover, .menu_simple ul li .current {
+color: purple;
+background-color: #5FD367;
+}

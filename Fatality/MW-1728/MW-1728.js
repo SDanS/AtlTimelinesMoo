@@ -8,9 +8,9 @@ var timeline_json = {
          },
          "start_date" : {
             "hour" : 13,
+            "month" : 10,
             "day" : 28,
             "year" : 2015,
-            "month" : 10,
             "minute" : 40
          },
          "text" : {
@@ -19,24 +19,31 @@ var timeline_json = {
          }
       },
       {
-         "start_datetime" : null,
          "group" : "scope",
+         "start_datetime" : null,
          "start_date" : {
             "hour" : 13,
+            "minute" : 42,
             "day" : 28,
             "year" : 2015,
-            "month" : 10,
-            "minute" : 42
+            "month" : 10
+         },
+         "text" : {
+            "headline" : "Description changed.",
+            "text" : "Description changed from: <br>Work with an unfamiliar user to see how they work with:\n- cpprove\n- configuration file affecting cpprove\n- not the sandbox story\n- UI for QAP2 and config page<br><br>To: <br>Work with an unfamiliar user to see how they work with:\n- cpprove\n- configuration file affecting cpprove\n- UI for QAP2 and config page"
          },
          "background" : {
             "color" : "palevioletred"
-         },
-         "text" : {
-            "text" : "Description changed from: <br>Work with an unfamiliar user to see how they work with:\n- cpprove\n- configuration file affecting cpprove\n- not the sandbox story\n- UI for QAP2 and config page<br><br>To: <br>Work with an unfamiliar user to see how they work with:\n- cpprove\n- configuration file affecting cpprove\n- UI for QAP2 and config page",
-            "headline" : "Description changed."
          }
       },
       {
+         "start_date" : {
+            "hour" : 13,
+            "year" : 2015,
+            "day" : 28,
+            "month" : 10,
+            "minute" : 44
+         },
          "text" : {
             "text" : "Description changed from: <br>Work with an unfamiliar user to see how they work with:\n- cpprove\n- configuration file affecting cpprove\n- UI for QAP2 and config page<br><br>To: <br>Work with an unfamiliar user to see how they work with:\n- cpprove\n- configuration file affecting cpprove\n- UI for QAP2 and config page\n- testd, logging, etc.",
             "headline" : "Description changed."
@@ -44,15 +51,8 @@ var timeline_json = {
          "background" : {
             "color" : "palevioletred"
          },
-         "start_date" : {
-            "month" : 10,
-            "minute" : 44,
-            "year" : 2015,
-            "hour" : 13,
-            "day" : 28
-         },
-         "start_datetime" : null,
-         "group" : "scope"
+         "group" : "scope",
+         "start_datetime" : null
       },
       {
          "start_datetime" : null,
@@ -62,10 +62,10 @@ var timeline_json = {
             "headline" : "Description changed."
          },
          "start_date" : {
-            "day" : 28,
             "hour" : 13,
-            "year" : 2015,
             "minute" : 44,
+            "day" : 28,
+            "year" : 2015,
             "month" : 10
          },
          "background" : {
@@ -73,22 +73,22 @@ var timeline_json = {
          }
       },
       {
-         "start_datetime" : null,
-         "group" : "scope",
+         "background" : {
+            "color" : "palevioletred"
+         },
          "text" : {
             "text" : "Story Points changed from: <br>undef<br><br>To: <br>20",
             "headline" : "Story Points changed."
          },
          "start_date" : {
+            "hour" : 13,
             "minute" : 46,
             "month" : 10,
             "year" : 2015,
-            "day" : 28,
-            "hour" : 13
+            "day" : 28
          },
-         "background" : {
-            "color" : "palevioletred"
-         }
+         "start_datetime" : null,
+         "group" : "scope"
       }
    ],
    "title" : {

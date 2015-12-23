@@ -52,6 +52,8 @@ sub run {
     ### Make sure everything is defined.
     my $name       = $sprint_name // $dir_name;
     my $jira_query = $query       // "Sprint = $sprint_name";
+    
+    ### Create all my directories or nothing gets printed.
     ### This is where the business happens.
     my $issues = Timelines::Jira::Query->new(
         client         => $client,

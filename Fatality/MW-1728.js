@@ -12,8 +12,8 @@ function drawChart() {
  "label" : "Start"
       },
       {
- "type" : "date",
- "label" : "End"
+ "label" : "End",
+ "type" : "date"
       }
    ],
    [
