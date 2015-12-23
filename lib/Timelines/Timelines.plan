@@ -1,0 +1,51 @@
+package Atl::Timelines;
+
+use Data::Dumper;
+
+use Carp::Always;
+
+### Request
+#### Request Overview Google Chart;
+### Issues
+#### Events
+#### Subtasks : Reuse issue and issue event logic.
+##### Events
+### Single issues and subtasks-> TimelineJS js
+### Issues and subtasks combined Story Overview Google Chart js
+
+# Construct request and response object: $client;
+# Construct Issues Object from issue list in response preserving order from 
+  # response and request issues with changelog (history) expansion.
+  # This should be reusable for subtasks. There should be one method that will
+  # list and get issues that come from jql queries.
+  # Get list of Stories, get stories using a jql query passed at the command line (recommend order by resolutiondate ASC, use jql query to request subtasks of parent issue (parent = MW-1558 ORDER BY resolutiondate ASC), request subtasks in resolutiondate order
+## request subtasks with changelog expanded and add these to the issue object.
+## Process Issue events -> All story level issues into Request 
+  ## Overview GC, single issues into TimelineJS, stories and 
+  ## their subtasks into story overview GC.
+## Process subtask events. -> Into TimelineJS, and into story overview GC.
+
+# TimelineJS for all issues and subtasks.
+# Request overview GC for all stories.
+# Story overview GC for story and it's subtasks.
+# Individual story GC for request overview page menu. 
+
+### Generic construction of Issues Object in base class.
+### TimelineJS class for issues fed to it returns a TimelineJS compatible json or js.
+  ### Will recurse through subtasks.
+### GC class for issues fed to it. 
+  ### Will store to single story, story + subtask overview, and request overview
+
+### TimelineJS issue and subtask file creation:
+  ### stored in issue (named) directory
+### Request Overview GC:
+  ### Stored in request directory (top-level)
+  ### index.html, js, and css.
+### Story overview GC:
+  ### Stored in top level directory.
+  ### {issue_key}.html, {issue_key}.js
+### Individual story GC:
+  ### Displayed on index page.
+  ### js and html in top level directory.
+
+1;
