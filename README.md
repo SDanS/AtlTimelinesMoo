@@ -5,3 +5,10 @@ perl ~/Timeline-Moo/query_to_timeline.pl --username "<username>" --password "<pa
 
 
 Copy the resulting directory to your webserver.
+
+ToDo:
+
+Use Template::Toolkit
+Move DateTime object creation to classes from script.
+Keep on chooglin.
+
