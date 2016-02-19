@@ -231,13 +231,13 @@ sub create_GC_json_ref {
             foreach ( 0 .. $#{ $bucket_instance->{items} } ) {
                 my $instance_item = $bucket_instance->{items}->[$_];
                 if ( $instance_item->{field} eq $current_bucket ) {
-                    my $to_string
+                    my $status
                         = $instance_item->{toString} // 'unassigned';
                     my $from_string
                         = $instance_item->{fromString} // 'unassigned';
                     my $event_type = $instance_item->{field};
                     my @row_array;
-                    my $status = $to_string;
+                    ### my $status = $to_string;
                     my ( $start_date, $end_date )
                         = date_termination( $event, $self->start_date,
                         $self->end_date );
