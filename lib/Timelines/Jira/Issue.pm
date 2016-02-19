@@ -188,35 +188,46 @@ sub create_GC_json_ref {
             my $next_bucket_instance
                 = $self->bucket->{$current_bucket}->[ $_ + 1 ];
             my $text = my $event->{text} = {};
+            ### Get the start date from the Jira issue.
             my ( $event_start_date, $event_start_datetime )
                 = _timeline_time( $bucket_instance->{created} );
             $event->{start_date}     = $event_start_date;
             $event->{start_datetime} = $event_start_datetime;
+            ### Compare start date from the issue and start date provided as an argument.
             my $cmp = DateTime->compare( $event->{start_datetime},
                 $self->start_datetime );
-
+            ### If the start date provided as an argument is after the start date in the Jira event,
+            ### use the start date from the argument.
             if ( $cmp == -1 ) {
                 $event->{start_date}     = $self->start_date;
                 $event->{start_datetime} = $self->start_datetime;
             }
+            ### Get the end date from the next event in the Jira issue.
             if ( $_ != $#{ $self->bucket->{$current_bucket} } ) {
                 my ( $event_end_date, $event_end_datetime )
                     = _timeline_time( $next_bucket_instance->{created} );
                 $event->{end_date}     = $event_end_date;
                 $event->{end_datetime} = $event_end_datetime;
+                ### Compare the end date from args to end date in Jira issue event.
                 my $cmp = DateTime->compare( $event->{end_datetime},
                     $self->end_datetime );
+                ### If the argument end date is before the Jira issue event end date,
+                ### use the argument end date.
                 if ( $cmp == 1 ) {
                     $event->{end_date}     = $self->end_date;
                     $event->{end_datetime} = $self->end_datetime;
                 }
             }
+            ### If the event is missing an end date, use the end date from args.
             if ( !$event->{end_date} ) {
                 $event->{end_date} = $self->end_date;
             }
+            ### If the event is missing an end datetime, use the end datetime that
+            ### is created from end date argument.
             if ( !$event->{end_datetime} ) {
                 $event->{end_datetime} = $self->end_datetime;
             }
+            ### Get the remainde of the data for the event.
             foreach ( 0 .. $#{ $bucket_instance->{items} } ) {
                 my $instance_item = $bucket_instance->{items}->[$_];
                 if ( $instance_item->{field} eq $current_bucket ) {
@@ -230,7 +241,8 @@ sub create_GC_json_ref {
                     my ( $start_date, $end_date )
                         = date_termination( $event, $self->start_date,
                         $self->end_date );
-
+                    ### Ensure that, no matter what, the end date comes after the start date. 
+                    ### If not, the event is insane and should be discarded.
                     if (   $event->{end_datetime}
                         && $event->{start_datetime} )
                     {
