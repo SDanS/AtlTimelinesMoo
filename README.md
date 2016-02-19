@@ -9,6 +9,8 @@ Copy the resulting directory to your webserver.
 ToDo:
 
 Use Template::Toolkit
+
 Move DateTime object creation to classes from script.
+
 Keep on chooglin.
 
