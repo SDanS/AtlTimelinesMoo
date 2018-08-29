@@ -12,5 +12,7 @@ Use Template::Toolkit
 
 Move DateTime object creation to classes from script.
 
+Reduce the size of Timelines::Jira::Issue:create_TJS_json with further abstraction.
+
 Keep on chooglin.
 
