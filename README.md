@@ -10,13 +10,15 @@ ToDo:
 
 Add stash event handling.
 
-Use Template::Toolkit
+Use Template::Toolkit to improve readability and reduce code complexity.
 
 Move DateTime object creation to classes from script.
 
 Reduce the size of Timelines::Jira::Issue:create_TJS_json with further abstraction.
 
 Add perldoc.
+
+Add unit testing.
 
 Keep on chooglin.
 
