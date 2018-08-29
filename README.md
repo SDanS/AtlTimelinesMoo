@@ -14,7 +14,7 @@ Use Template::Toolkit to improve readability and reduce code complexity.
 
 Move DateTime object creation to classes from script.
 
-Reduce the size of Timelines::Jira::Issue:create_TJS_json with further abstraction.
+Reduce the size of Timelines::Jira::Issue:create_TJS_json Timelines::Jira::Issue:create_GC_json with further abstraction.
 
 Add perldoc.
 
