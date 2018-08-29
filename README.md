@@ -8,6 +8,8 @@ Copy the resulting directory to your webserver.
 
 ToDo:
 
+Add stash event handling.
+
 Use Template::Toolkit
 
 Move DateTime object creation to classes from script.
