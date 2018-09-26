@@ -20,5 +20,11 @@ Add perldoc.
 
 Add unit testing.
 
+# Long Term goals.
+
+Create interface to issue Jira queries.
+
+Reduce the use of static html and js files.
+
 Keep on chooglin.
 
